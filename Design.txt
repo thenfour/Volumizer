@@ -1,0 +1,112 @@
+
+IMixerLib
+    Load();
+    Save();
+    Refresh();
+    IMixers
+    -IMixer
+        Save();
+        Refresh();
+        get_name(bstr);
+        get_version(major,minor)
+        IMixerDestinations
+        -IMixerDestination : IMixerLine
+            IMixerLines
+            -IMixerLine
+                Refresh();
+                Save();
+                Status
+                Type
+                Channels
+                Name
+                ShortName
+                IMixerControls
+                -IMixerControl
+                    Load();
+                    Refresh();
+                    Type
+                    Datatype
+                    Name
+                    Shortname
+
+
+IMixerLib
+IMixers
+IMixer
+IMixerDestinations
+IEnumMixerDestination
+IMixerDestination
+IMixerLines
+IEnumMixerLine
+IMixerLine
+IMixerControls
+IEnumMixerControl
+IMixerControl
+
+
+
+
+IMixerLibrary
+    *GetMixer(long id)
+    *GetDestination(long id, MIX_DESTINATION Dest)
+    *GetLine(long id, MIX_DESTINATION Dest, MIX_LINE line)
+    *GetControl(long id, MIX_DESTINATION Dest, MIX_LINE line, MIX_CONTROL Control)
+
+IMixer
+    GetDestination([in] MIX_DESTINATION dest, [out, retval] IMixerDestination** pVal)
+    GetLine([in] MIX_DESTINATION dest, [in] MIX_LINE line, [out, retval] IMixerLine** pVal)
+    GetControl([in] MIX_DESTINATION dest, [in] MIX_LINE line, [in] MIX_CONTROL control, [out, retval] IMixerControl** pVal)
+
+IMixerDestination
+    GetLine([in] MIX_LINE line, [out, retval] IMixerLine** pVal)
+    GetLineControl([in] MIX_LINE line, [in] MIX_CONTROL control, [out, retval] IMixerControl** pVal)
+
+IMixerLine
+    GetControl([in] MIX_CONTROL control, [out, retval] IMixerControl** pVal)
+
+
+
+
+
+IMixerControl
+
+    *Load();
+    *Save();
+    *Refresh();
+
+    // General properties
+    *get_uniform(BOOL*);
+    *get_multiple(BOOL*);
+    *get_channels(long*);
+    *get_datatype(MIX_DATATYPE*);
+    *get_min(VARIANT*);
+    *get_max(VARIANT*);
+    *get_step(long*);
+
+    // Custom Data
+    *GetCustomBuffer(BYTE**pVal, long* pcb);
+    *CommitCustomBuffer();
+    *get_custom_size(long*);// Size of custom buffer.
+
+    *GetValuesBuffer(VARIANT**, long* pc);
+    *CommitValuesBuffer();
+
+    // Text values
+    *get_supports_text(BOOL*);
+    *GetText(long id, BSTR* pVal);
+
+    // Mux controls
+    *GetMuxLineType([in] long id, [out, retval] MIX_LINE* pVal);
+
+IMixerControl2
+    volume(unsigned long);// 0-65535
+    balance(unsigned long);// 0-65535
+    mute(BOOL);
+    mux_line(MIX_LINE);
+    mux_type(MIX_LINE);
+
+
+IMixerLine2
+    volume(unsigned long);// 0-65535
+    balance(unsigned long);// 0-65535
+    mute(BOOL);

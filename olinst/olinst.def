@@ -1,0 +1,4 @@
+LIBRARY	olinst
+EXPORTS
+    ninstall
+    install

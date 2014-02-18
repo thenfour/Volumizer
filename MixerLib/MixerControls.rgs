@@ -1,0 +1,26 @@
+HKCR
+{
+	MixerLib.MixerControls.1 = s 'MixerControls Class'
+	{
+		CLSID = s '{6E75C15A-2AA2-44EF-B3E0-2DC8DA404EB2}'
+	}
+	MixerLib.MixerControls = s 'MixerControls Class'
+	{
+		CLSID = s '{6E75C15A-2AA2-44EF-B3E0-2DC8DA404EB2}'
+		CurVer = s 'MixerLib.MixerControls.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6E75C15A-2AA2-44EF-B3E0-2DC8DA404EB2} = s 'MixerControls Class'
+		{
+			ProgID = s 'MixerLib.MixerControls.1'
+			VersionIndependentProgID = s 'MixerLib.MixerControls'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{F48CCEC5-D328-4BD0-840F-AA1A0BB6AB45}'
+		}
+	}
+}

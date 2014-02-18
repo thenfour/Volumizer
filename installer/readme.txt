@@ -1,0 +1,1 @@
+It's important that you copy the bin files to this dir.

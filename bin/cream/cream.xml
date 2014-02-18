@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<Theme>
+    <ChannelStrip>
+        <MuteButton>
+            <Setting name="OnImage" value="muteoff.gif"/>
+            <Setting name="OffImage" value="muteon.gif"/>
+            <Setting name="PlacementX" value="0"/>
+            <Setting name="PlacementY" value="312"/>
+
+            <Setting name="Left" value="29"/>
+            <Setting name="Top" value="312"/>
+            <Setting name="Right" value="85"/>
+            <Setting name="Bottom" value="350"/>
+        </MuteButton>
+        <VolumeFader>
+            <Setting name="Top" value="49"/>
+            <Setting name="Bottom" value="246"/>
+            <Setting name="ThumbImage" value="Thumb.gif"/>
+        </VolumeFader>
+        <BalancePot>
+            <Setting name="Image" value="bal.gif"/>
+            <Setting name="PlacementX" value="0"/>
+            <Setting name="PlacementY" value="259"/>
+
+            <Setting name="CenterX" value="58"/>
+            <Setting name="CenterY" value="283"/>
+            <Setting name="LineLength" value="19"/>
+            <Setting name="LineColor" value="#D3D3BA"/>
+            <Setting name="AngleRestriction" value="45"/>
+        </BalancePot>
+        <Setting name="Font" value="Arial Black"/>
+        <Setting name="TextColor" value="#302D28"/>
+        <Setting name="TextSize" value="8"/>
+
+        <Setting name="TextLeft" value="0"/>
+        <Setting name="TextTop" value="4"/>
+        <Setting name="TextRight" value="114"/>
+        <Setting name="TextBottom" value="30"/>
+        
+        <Setting name="BackColor" value="#283F2F"/>
+        <Setting name="BackImage" value="Background.gif"/>
+    </ChannelStrip>
+    <LevelMeter>
+        <Setting name="ImageOn" value="MeterOn.bmp"/>
+        <Setting name="ImageOff" value="MeterOff.bmp"/>
+        <Setting name="XOffset" value="5"/>
+        <Setting name="LEDWidth" value="29"/>
+        <Setting name="LEDCount" value="10"/>
+    </LevelMeter>
+</Theme>

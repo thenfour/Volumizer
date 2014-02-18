@@ -1,0 +1,26 @@
+One Light Volumizer (c) 2002 One Light Corp
+Command line options:
+
+Volumizer.exe [-m MixerID] [-s SetID] [-o File] [-x]
+
+MixerID - Device ID.  This represents the zero-based index of the
+          sound card for which you wish to display properties.
+          The first sound card on the system is represented by 0.
+SetID   - Control set number.  Typically, 0 represents the
+          "Volume Control" and 1 represents the "Recording Control"
+File    - The name of a file to import configuration from.
+          This must be a file that was exported from Volumizer.
+x       - Specifies that Volumizer should not display any
+          user-interface, but should apply the settings and
+          exit immediately.  This is typically used in conjunction
+          with -o.
+
+Examples:
+
+Volumizer.exe -o "c:\settings.xml" -x
+Imports the system's mixer configuration from c:\settings.xml and
+exits immediately.
+
+Volumizer.exe -m 1 -s 0
+Starts Volumizer and displays settings for the second sound card
+installed on the system, and displays wave-out controls for it.

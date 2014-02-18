@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<Themes>
+    <Theme link="Default\default.xml" name="Default"/>
+    <Theme link="Cream\cream.xml" name="Cream"/>
+</Themes>

@@ -1,0 +1,25 @@
+HKCR
+{
+	MixerLib.EnumMixerLines.1 = s 'EnumMixerLines Class'
+	{
+		CLSID = s '{DB4B7FF4-FD7C-49DD-839E-935BEB026D83}'
+	}
+	MixerLib.EnumMixerLines = s 'EnumMixerLines Class'
+	{
+		CLSID = s '{DB4B7FF4-FD7C-49DD-839E-935BEB026D83}'
+		CurVer = s 'MixerLib.EnumMixerLines.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DB4B7FF4-FD7C-49DD-839E-935BEB026D83} = s 'EnumMixerLines Class'
+		{
+			ProgID = s 'MixerLib.EnumMixerLines.1'
+			VersionIndependentProgID = s 'MixerLib.EnumMixerLines'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{F48CCEC5-D328-4BD0-840F-AA1A0BB6AB45}'
+		}
+	}
+}

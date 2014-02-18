@@ -1,0 +1,461 @@
+// MixerLib.idl : IDL source for MixerLib.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (MixerLib.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+
+[
+	uuid(F48CCEC5-D328-4BD0-840F-AA1A0BB6AB45),
+	version(1.0),
+	helpstring("MixerLib 1.0 Type Library")
+]
+library MIXERLIBLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+    interface IMixerLibrary;
+    interface IMixers;
+    interface IMixer;
+    interface IMixerDestinations;
+    interface IMixerDestination;
+    interface IMixerLines;
+    interface IMixerLine;
+    interface IMixerControls;
+    interface IMixerControl;
+
+    interface IEnumMixers;
+    interface IEnumMixerDestinations;
+    interface IEnumMixerLines;
+    interface IEnumMixerControls;
+
+
+    /*
+        Most of these enumerations are simply copied from mmsystem.h
+        (with different values, of course).
+
+        Exceptions are commented.
+
+        Dont't get errors (MIX?_INVALID) mixed up with 'unknown'.
+        The MIX?_INVALID values are intended to be only used for error
+        statuses, not as properties of anything.
+
+        So if an object is an unknown type, use the MIX?_UNDEFINED value.
+    */
+    typedef enum _MixDestination
+    {
+        MIXD_INVALID = 0,// No suitable mapping... used as an error code
+        MIXD_HEADPHONES = 1,
+        MIXD_LINE = 2,
+        MIXD_MONITOR = 3,
+        MIXD_SPEAKERS = 4,// wave out
+        MIXD_TELEPHONE = 5,
+        MIXD_UNDEFINED = 6,
+        MIXD_VOICEIN = 7,
+        MIXD_WAVEIN = 8,// recording
+        MIXD_DIGITAL = 9
+
+    } MIX_DESTINATION;
+
+
+    typedef enum _MixLine
+    {
+        MIXL_INVALID = 0,// No suitable mapping... used as an error code
+        MIXL_AUXILIARY = 1,
+        MIXL_COMPACTDISC = 2,
+        MIXL_DIGITAL = 3,
+        MIXL_LINE = 4,
+        MIXL_MICROPHONE = 5,
+        MIXL_PCSPEAKER = 6,
+        MIXL_SYNTHESIZER = 7,
+        MIXL_TELEPHONE = 8,
+        MIXL_UNDEFINED = 9,
+        MIXL_WAVEOUT = 10,
+        MIXL_SELF = 11,// This one is special - it refers to the destination.
+        MIXL_ANALOG = 12
+
+    } MIX_LINE;
+
+
+
+    typedef enum _MixControl
+    {
+        MIXC_INVALID = 0,// No suitable mapping... used as an error code
+
+        // Fader
+        MIXC_BASS = 1,
+        MIXC_EQUALIZER = 2,
+        MIXC_FADER = 3,
+        MIXC_TREBLE = 4,
+        MIXC_VOLUME = 5,
+
+        // List
+        MIXC_MIXER = 20,
+        MIXC_MULTIPLESELECT = 21,
+        MIXC_MUX = 22,
+        MIXC_SINGLESELECT = 23,
+
+        // Meter
+        MIXC_BOOLEANMETER = 40,
+        MIXC_PEAKMETER = 41,
+        MIXC_SIGNEDMETER = 42,
+        MIXC_UNSIGNEDMETER = 43,
+
+        // Number
+        MIXC_DECIBELS = 60,
+        MIXC_PERCENT = 61,
+        MIXC_SIGNED = 62,
+        MIXC_UNSIGNED = 63,
+
+        // Slider
+        MIXC_PAN = 80,
+        MIXC_QSOUNDPAN = 81,
+        MIXC_SLIDER = 82,
+
+        // Switch
+        MIXC_BOOLEAN = 100,
+        MIXC_BUTTON = 101,
+        MIXC_LOUDNESS = 102,
+        MIXC_MONO = 103,
+        MIXC_MUTE = 104,
+        MIXC_ONOFF = 105,
+        MIXC_STEREOENH = 106,
+        MIXC_BASS_BOOST = 107,
+
+        // Time
+        MIXC_MICROTIME = 120,
+        MIXC_MILLITIME = 121,
+
+        MIXC_CUSTOM = 140,
+        MIXC_UNDEFINED = 141
+
+    } MIX_CONTROL;
+
+
+    /*
+        There is no win32 equivelant for these guys
+    */
+    typedef enum _MixDataType
+    {
+        MIXDT_INVALID = 0,// No suitable mapping... used as an error code
+
+        MIXDT_CUSTOM = 1,
+
+        MIXDT_BOOLEAN = 2,
+        MIXDT_SIGNED = 3,
+        MIXDT_UNSIGNED = 4,
+        MIXDT_STRING = 5,
+
+        MIXDT_UNDEFINED = 6
+
+    } MIX_DATATYPE;
+
+    [
+        uuid(9f05af25-61d8-4427-953b-1243d58df616),
+        helpstring("_IMixerEvents Interface")
+    ]
+    dispinterface _IMixerEvents
+    {
+		properties:
+		methods:
+		[id(1), helpstring("method OnLineChange")] void OnLineChange([in] IMixerLine* pLine);
+		[id(2), helpstring("method OnControlChange")] void OnControlChange([in] IMixerControl* p);
+    }
+
+	[
+		object,
+		uuid(7d122821-73c7-4eac-a54f-ea34ed49551a),
+	
+		helpstring("IMixerControl2 Interface"),
+		pointer_default(unique)
+	]
+	interface IMixerControl2 : IUnknown
+	{
+		[propget, helpstring("property volume")] HRESULT volume([out, retval] unsigned long *pVal);
+		[propput, helpstring("property volume")] HRESULT volume([in] unsigned long newVal);
+		[propget, helpstring("property balance")] HRESULT balance([out, retval] unsigned long *pVal);
+		[propput, helpstring("property balance")] HRESULT balance([in] unsigned long newVal);
+		[propget, helpstring("property mute")] HRESULT mute([out, retval] BOOL *pVal);
+		[propput, helpstring("property mute")] HRESULT mute([in] BOOL newVal);
+		[propget, helpstring("property mux_source")] HRESULT mux_source([out, retval] IMixerLine* *pVal);
+		[propput, helpstring("property mux_source")] HRESULT mux_source([in] IMixerLine* newVal);
+		[propget, helpstring("property mux_type")] HRESULT mux_type([out, retval] MIX_LINE *pVal);
+		[propput, helpstring("property mux_type")] HRESULT mux_type([in] MIX_LINE newVal);
+		[propget, helpstring("property fade")] HRESULT fade([out, retval] unsigned long *pVal);
+		[propput, helpstring("property fade")] HRESULT fade([in] unsigned long newVal);
+    }
+	[
+		object,
+		uuid(7deeadce-2cec-4703-9ba6-2f469bcb7c98),
+	
+		helpstring("IMixerLine2 Interface"),
+		pointer_default(unique)
+	]
+	interface IMixerLine2 : IUnknown
+    {
+		[propget, helpstring("property volume")] HRESULT volume([out, retval] unsigned long *pVal);
+		[propput, helpstring("property volume")] HRESULT volume([in] unsigned long newVal);
+		[propget, helpstring("property balance")] HRESULT balance([out, retval] unsigned long *pVal);
+		[propput, helpstring("property balance")] HRESULT balance([in] unsigned long newVal);
+		[propget, helpstring("property mute")] HRESULT mute([out, retval] BOOL *pVal);
+		[propput, helpstring("property mute")] HRESULT mute([in] BOOL newVal);
+		[propget, helpstring("property mux_source")] HRESULT mux_source([out, retval] IMixerLine* *pVal);
+		[propput, helpstring("property mux_source")] HRESULT mux_source([in] IMixerLine* newVal);
+		[propget, helpstring("property mux_type")] HRESULT mux_type([out, retval] MIX_LINE *pVal);
+		[propput, helpstring("property mux_type")] HRESULT mux_type([in] MIX_LINE newVal);
+		[propget, helpstring("property fade")] HRESULT fade([out, retval] unsigned long *pVal);
+		[propput, helpstring("property fade")] HRESULT fade([in] unsigned long newVal);
+    }
+	[
+		object,
+		uuid(6B20150C-1051-4792-9325-97BD34C9072B),
+	
+		helpstring("IMixerControl Interface"),
+		pointer_default(unique)
+	]
+	interface IMixerControl : IUnknown
+	{
+		[propget, helpstring("property name")] HRESULT name([out, retval] BSTR *pVal);
+		[helpstring("method Load")] HRESULT Load([in] VARIANT v);
+		[helpstring("method Save")] HRESULT Save([in] VARIANT v);
+		[propget, helpstring("property type")] HRESULT type([out, retval] MIX_CONTROL *pVal);
+		[propget, helpstring("property uniform")] HRESULT uniform([out, retval] BOOL *pVal);
+		[propget, helpstring("property multiple")] HRESULT multiple([out, retval] long *pVal);
+		[propget, helpstring("property channels")] HRESULT channels([out, retval] long *pVal);
+		[propget, helpstring("property datatype")] HRESULT datatype([out, retval] MIX_DATATYPE *pVal);
+		[propget, helpstring("property custom_size")] HRESULT custom_size([out, retval] long *pVal);
+		[propget, helpstring("property min")] HRESULT min([out, retval] VARIANT *pVal);
+		[propget, helpstring("property max")] HRESULT max([out, retval] VARIANT *pVal);
+		[propget, helpstring("property steps")] HRESULT steps([out, retval] long *pVal);
+		[helpstring("method Refresh")] HRESULT Refresh();
+		[helpstring("method GetCustomBuffer")] HRESULT GetCustomBuffer([out] BYTE**pVal, [out] long* pcb);
+		[helpstring("method CommitCustomBuffer")] HRESULT CommitCustomBuffer();
+		[helpstring("method GetValuesBuffer")] HRESULT GetValuesBuffer([out] VARIANT**, [out] long* pc);
+		[helpstring("method CommitValuesBuffer")] HRESULT CommitValuesBuffer();
+		[helpstring("method GetText")] HRESULT GetText([in] long id, [out] BSTR* pVal);
+		[propget, helpstring("property supports_text")] HRESULT supports_text([out, retval] BOOL *pVal);
+		[helpstring("method GetMuxLine")] HRESULT GetMuxLine([in] long id, [out, retval] IMixerLine** pVal);
+		[helpstring("method SetValuesUniformly")] HRESULT SetValuesUniformly([in] VARIANT v);
+		[propget, helpstring("property owner")] HRESULT owner([out, retval] IMixerLine* *pVal);
+		[propget, helpstring("property controlid")] HRESULT controlid([out, retval] unsigned long *pVal);
+		[propget, helpstring("property short_name")] HRESULT short_name([out, retval] BSTR *pVal);
+	};
+	[
+		object,
+		uuid(EDABF35F-EDDE-4BF8-BCB4-251019669D6D),
+		dual,
+		helpstring("IMixerControls Interface"),
+		pointer_default(unique)
+	]
+	interface IMixerControls : IDispatch
+	{
+        [propget, id(0), helpstring("property Item")] HRESULT Item([in] VARIANT i, [out, retval] IMixerControl** pVal);
+        [propget, id(-4), helpstring("property _NewEnum")] HRESULT _NewEnum([out, retval] IUnknown** pVal);
+        [propget, id(1), helpstring("property Count")] HRESULT Count([out, retval] long *pVal);
+	};
+	[
+		object,
+		uuid(4570A7A2-7213-4BD7-A93D-E5BD4717A66A),
+	
+		helpstring("IMixerLine Interface"),
+		pointer_default(unique)
+	]
+	interface IMixerLine : IUnknown
+	{
+		[propget, helpstring("property name")] HRESULT name([out, retval] BSTR *pVal);
+		[propget, helpstring("property controls")] HRESULT controls([out, retval] IMixerControls **pVal);
+		[helpstring("method EnumControls")] HRESULT EnumControls([out, retval] IEnumMixerControls **ppVal);
+		[propget, helpstring("property control_count")] HRESULT control_count([out, retval] long *pVal);
+		[helpstring("method GetControl")] HRESULT GetControl([in] MIX_CONTROL control, [out, retval] IMixerControl** pVal);
+		[helpstring("method Load")] HRESULT Load([in] VARIANT v);
+		[helpstring("method Save")] HRESULT Save([in] VARIANT v);
+		[propget, helpstring("property type")] HRESULT type([out, retval] MIX_LINE *pVal);
+		[propget, helpstring("property owner")] HRESULT owner([out, retval] IMixerDestination* *pVal);
+		[propget, helpstring("property channels")] HRESULT channels([out, retval] long *pVal);
+		[propget, helpstring("property lineid")] HRESULT lineid([out, retval] unsigned long *pVal);
+		[propget, helpstring("property short_name")] HRESULT short_name([out, retval] BSTR *pVal);
+		[helpstring("method RefreshLine")] HRESULT RefreshLine();
+		[helpstring("method GetControlByID")] HRESULT GetControlByID([in] unsigned long ulId, [out] IMixerControl** pVal);
+	};
+	[
+		object,
+		uuid(85E9D4CE-B77D-4261-A093-4A1ECA0AA52B),
+		dual,
+		helpstring("IMixerLines Interface"),
+		pointer_default(unique)
+	]
+	interface IMixerLines : IDispatch
+	{
+        [propget, id(0), helpstring("property Item")] HRESULT Item([in] VARIANT i, [out, retval] IMixerLine** pVal);
+        [propget, id(-4), helpstring("property _NewEnum")] HRESULT _NewEnum([out, retval] IUnknown** pVal);
+        [propget, id(1), helpstring("property Count")] HRESULT Count([out, retval] long *pVal);
+	};
+	[
+		object,
+		uuid(FCD62288-AE72-4297-BF05-40EE82233D48),
+	
+		helpstring("IMixerDestination Interface"),
+		pointer_default(unique)
+	]
+	interface IMixerDestination : IUnknown
+	{
+        // IMixerDestination stuff.
+		[propget, helpstring("property lines")] HRESULT lines([out, retval] IMixerLines **pVal);
+		[helpstring("method EnumLines")] HRESULT EnumLines([out, retval] IEnumMixerLines** ppVal);
+		[propget, helpstring("property line_count")] HRESULT line_count([out, retval] long *pVal);
+		[helpstring("method GetLine")] HRESULT GetLine([in] MIX_LINE line, [out, retval] IMixerLine** pVal);
+		[helpstring("method GetLineControl")] HRESULT GetLineControl([in] MIX_LINE line, [in] MIX_CONTROL control, [out, retval] IMixerControl** pVal);
+		[propget, helpstring("property type_destination")] HRESULT type_destination([out, retval] MIX_DESTINATION *pVal);
+		[propget, helpstring("property owner")] HRESULT owner([out, retval] IMixer* *pVal);
+		[helpstring("method Refresh")] HRESULT Refresh();
+		[helpstring("method GetLineByID")] HRESULT GetLineByID([in] unsigned long ulId, [out] IMixerLine** pVal);
+		[helpstring("method GetLineControlByID")] HRESULT GetLineControlByID([in] unsigned long ulId, [out] IMixerControl** pVal);
+		[helpstring("method SaveDestination")] HRESULT SaveDestination([in] VARIANT v);
+		[helpstring("method LoadDestination")] HRESULT LoadDestination([in] VARIANT v);
+	};
+	[
+		object,
+		uuid(6908530F-B57A-4BDE-B9A2-0F39D27EE500),
+		dual,
+		helpstring("IMixerDestinations Interface"),
+		pointer_default(unique)
+	]
+	interface IMixerDestinations : IDispatch
+	{
+        [propget, id(0), helpstring("property Item")] HRESULT Item([in] VARIANT i, [out, retval] IMixerDestination** pVal);
+        [propget, id(-4), helpstring("property _NewEnum")] HRESULT _NewEnum([out, retval] IUnknown** pVal);
+        [propget, id(1), helpstring("property Count")] HRESULT Count([out, retval] long *pVal);
+	};
+	[
+		object,
+		uuid(44F401CA-0CB5-4956-A5CE-F0D37F68A9C8),
+	
+		helpstring("IMixer Interface"),
+		pointer_default(unique)
+	]
+	interface IMixer : IUnknown
+	{
+		[propget, helpstring("property name")] HRESULT name([out, retval] BSTR *pVal);
+		[propget, helpstring("property destinations")] HRESULT destinations([out, retval] IMixerDestinations **pVal);
+		[helpstring("method EnumDestinations")] HRESULT EnumDestinations([out, retval] IEnumMixerDestinations **ppVal);
+		[propget, helpstring("property destination_count")] HRESULT destination_count([out, retval] long *pVal);
+		[helpstring("method GetDestination")] HRESULT GetDestination([in] MIX_DESTINATION dest, [out, retval] IMixerDestination** pVal);
+		[helpstring("method GetLine")] HRESULT GetLine([in] MIX_DESTINATION dest, [in] MIX_LINE line, [out, retval] IMixerLine** pVal);
+		[helpstring("method GetControl")] HRESULT GetControl([in] MIX_DESTINATION dest, [in] MIX_LINE line, [in] MIX_CONTROL control, [out, retval] IMixerControl** pVal);
+		[helpstring("method Load")] HRESULT Load([in] VARIANT v);
+		[helpstring("method Save")] HRESULT Save([in] VARIANT v);
+		[propget, helpstring("property manufacturer")] HRESULT manufacturer([out, retval] short *pVal);
+		[propget, helpstring("property product")] HRESULT product([out, retval] short *pVal);
+		[propget, helpstring("property version_major")] HRESULT version_major([out, retval] short *pVal);
+		[propget, helpstring("property version_minor")] HRESULT version_minor([out, retval] short *pVal);
+		[propget, helpstring("property owner")] HRESULT owner([out, retval] IMixerLibrary* *pVal);
+		[helpstring("method Refresh")] HRESULT Refresh();
+		[propget, helpstring("property mixerid")] HRESULT mixerid([out, retval] DWORD *pVal);
+		[helpstring("method GetDestinationByID")] HRESULT GetDestinationByID([in] unsigned long ulId, [out] IMixerDestination** pVal);
+		[helpstring("method GetLineByID")] HRESULT GetLineByID([in] unsigned long ulId, [out] IMixerLine** pVal);
+		[helpstring("method GetControlByID")] HRESULT GetControlByID([in] unsigned long ulId, [out] IMixerControl** pVal);
+	};
+	[
+		object,
+		uuid(22E07A74-2409-4AAF-BE7E-66F6F0B10A3E),
+		dual,
+		helpstring("IMixers Interface"),
+		pointer_default(unique)
+	]
+	interface IMixers : IDispatch
+	{
+        [propget, id(0), helpstring("property Item")] HRESULT Item([in] VARIANT i, [out, retval] IMixer** pVal);
+        [propget, id(-4), helpstring("property _NewEnum")] HRESULT _NewEnum([out, retval] IUnknown** pVal);
+        [propget, id(1), helpstring("property Count")] HRESULT Count([out, retval] long *pVal);
+	};
+	[
+		object,
+		uuid(F3C28A5C-EB2D-4ECB-B2DB-E23F917CD266),
+	
+		helpstring("IMixerLibrary Interface"),
+		pointer_default(unique)
+	]
+	interface IMixerLibrary : IUnknown
+	{
+		[helpstring("method Load")] HRESULT Load([in] VARIANT v);
+		[propget, helpstring("property mixers")] HRESULT mixers([out, retval] IMixers **pVal);
+		[helpstring("method Save")] HRESULT Save([in] VARIANT v);
+		[helpstring("method EnumMixers")] HRESULT EnumMixers([out, retval] IEnumMixers **ppVal);
+		[propget, helpstring("property mixer_count")] HRESULT mixer_count([out, retval] long *pVal);
+		[helpstring("method GetMixer")] HRESULT GetMixer([in] long id, [out, retval] IMixer** pVal);
+		[helpstring("method GetDestination")] HRESULT GetDestination([in] long idMixer, [in] MIX_DESTINATION Dest, [out, retval] IMixerDestination** pVal);
+		[helpstring("method GetControl")] HRESULT GetControl([in] long idMixer, [in] MIX_DESTINATION dest, [in] MIX_LINE line, [in] MIX_CONTROL control, [out, retval] IMixerControl** pVal);
+		[helpstring("method GetLine")] HRESULT GetLine([in] long idMixer, [in] MIX_DESTINATION dest, [in] MIX_LINE line, [out, retval] IMixerLine** pVal);
+		[helpstring("method Refresh")] HRESULT Refresh();
+	};
+	[
+		object,
+		uuid(9D60B0F4-9C46-4230-9FEF-DB4B167DA0DF),
+	
+		helpstring("IEnumMixers Interface"),
+		pointer_default(unique)
+	]
+	interface IEnumMixers : IUnknown
+	{
+        [helpstring("method Next")] HRESULT Next([in] ULONG c, [out, size_is(c), length_is(*pFetched)] IMixer ** ppVal, [out] ULONG * pFetched);
+        [helpstring("method Skip")] HRESULT Skip([in] ULONG c);
+        [helpstring("method Reset")] HRESULT Reset();
+        [helpstring("method Clone")] HRESULT Clone([out] IEnumMixers **ppEnum);
+	};
+	[
+		object,
+		uuid(221FD072-E504-49A7-B7B0-8CC54F8FDCAE),
+
+		helpstring("IEnumMixerDestinations Interface"),
+		pointer_default(unique)
+	]
+	interface IEnumMixerDestinations : IUnknown
+	{
+        [helpstring("method Next")] HRESULT Next([in] ULONG c, [out, size_is(c), length_is(*pFetched)] IMixerDestination ** ppVal, [out] ULONG * pFetched);
+        [helpstring("method Skip")] HRESULT Skip([in] ULONG c);
+        [helpstring("method Reset")] HRESULT Reset();
+        [helpstring("method Clone")] HRESULT Clone([out] IEnumMixerDestinations **ppEnum);
+	};
+	[
+		object,
+		uuid(E7E51097-9DD7-4D8C-999A-7ACE8FAB2394),
+	
+		helpstring("IEnumMixerLines Interface"),
+		pointer_default(unique)
+	]
+	interface IEnumMixerLines : IUnknown
+	{
+        [helpstring("method Next")] HRESULT Next([in] ULONG c, [out, size_is(c), length_is(*pFetched)] IMixerLine ** ppVal, [out] ULONG * pFetched);
+        [helpstring("method Skip")] HRESULT Skip([in] ULONG c);
+        [helpstring("method Reset")] HRESULT Reset();
+        [helpstring("method Clone")] HRESULT Clone([out] IEnumMixerLines **ppEnum);
+	};
+	[
+		object,
+		uuid(2A23E48A-F952-44E8-B45C-177A26F1032B),
+	
+		helpstring("IEnumMixerControls Interface"),
+		pointer_default(unique)
+	]
+	interface IEnumMixerControls : IUnknown
+	{
+        [helpstring("method Next")] HRESULT Next([in] ULONG c, [out, size_is(c), length_is(*pFetched)] IMixerControl ** ppVal, [out] ULONG * pFetched);
+        [helpstring("method Skip")] HRESULT Skip([in] ULONG c);
+        [helpstring("method Reset")] HRESULT Reset();
+        [helpstring("method Clone")] HRESULT Clone([out] IEnumMixerControls **ppEnum);
+	};
+
+	[
+		uuid(CD871F9D-4BCD-49B7-B3AD-977C93982AF1),
+		helpstring("MixerLibrary Class")
+	]
+	coclass MixerLibrary
+	{
+		[default] interface IMixerLibrary;
+        //[source] interface _IMixerEvents;
+	};
+};

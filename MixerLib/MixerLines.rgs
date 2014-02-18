@@ -1,0 +1,26 @@
+HKCR
+{
+	MixerLib.MixerLines.1 = s 'MixerLines Class'
+	{
+		CLSID = s '{8198F636-3B20-4C76-ADBD-181039DDF143}'
+	}
+	MixerLib.MixerLines = s 'MixerLines Class'
+	{
+		CLSID = s '{8198F636-3B20-4C76-ADBD-181039DDF143}'
+		CurVer = s 'MixerLib.MixerLines.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {8198F636-3B20-4C76-ADBD-181039DDF143} = s 'MixerLines Class'
+		{
+			ProgID = s 'MixerLib.MixerLines.1'
+			VersionIndependentProgID = s 'MixerLib.MixerLines'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{F48CCEC5-D328-4BD0-840F-AA1A0BB6AB45}'
+		}
+	}
+}

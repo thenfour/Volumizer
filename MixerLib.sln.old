@@ -1,0 +1,55 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CCLib", "CCLib\CCLib.vcproj", "{C86A7E4F-B5C0-4050-93BA-CF4AC04FF7D7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MixerGuid", "MixerGuid\MixerGuid.vcproj", "{A763C5CC-9368-4EFD-831B-FBF820814652}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MixerLib", "MixerLib\MixerLib.vcproj", "{EDA83C32-E32A-4C4E-AE02-CD3E43F485C6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SndVolEx", "SndVolEx\SndVolEx.vcproj", "{904AAEA1-0CD7-4854-A434-01234DD0DEA6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ccres", "ccres\ccres.vcproj", "{91CD0E16-8837-485C-98D0-1F9047FBE202}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "olinst", "olinst\olinst.vcproj", "{2BABFCBE-C151-4496-A3B8-2E6D69770240}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+		{A763C5CC-9368-4EFD-831B-FBF820814652}.0 = {EDA83C32-E32A-4C4E-AE02-CD3E43F485C6}
+		{EDA83C32-E32A-4C4E-AE02-CD3E43F485C6}.0 = {C86A7E4F-B5C0-4050-93BA-CF4AC04FF7D7}
+		{904AAEA1-0CD7-4854-A434-01234DD0DEA6}.0 = {C86A7E4F-B5C0-4050-93BA-CF4AC04FF7D7}
+		{904AAEA1-0CD7-4854-A434-01234DD0DEA6}.1 = {A763C5CC-9368-4EFD-831B-FBF820814652}
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{C86A7E4F-B5C0-4050-93BA-CF4AC04FF7D7}.Debug.ActiveCfg = Debug|Win32
+		{C86A7E4F-B5C0-4050-93BA-CF4AC04FF7D7}.Debug.Build.0 = Debug|Win32
+		{C86A7E4F-B5C0-4050-93BA-CF4AC04FF7D7}.Release.ActiveCfg = Release|Win32
+		{C86A7E4F-B5C0-4050-93BA-CF4AC04FF7D7}.Release.Build.0 = Release|Win32
+		{A763C5CC-9368-4EFD-831B-FBF820814652}.Debug.ActiveCfg = Debug|Win32
+		{A763C5CC-9368-4EFD-831B-FBF820814652}.Debug.Build.0 = Debug|Win32
+		{A763C5CC-9368-4EFD-831B-FBF820814652}.Release.ActiveCfg = Release|Win32
+		{A763C5CC-9368-4EFD-831B-FBF820814652}.Release.Build.0 = Release|Win32
+		{EDA83C32-E32A-4C4E-AE02-CD3E43F485C6}.Debug.ActiveCfg = Debug|Win32
+		{EDA83C32-E32A-4C4E-AE02-CD3E43F485C6}.Debug.Build.0 = Debug|Win32
+		{EDA83C32-E32A-4C4E-AE02-CD3E43F485C6}.Release.ActiveCfg = Release|Win32
+		{EDA83C32-E32A-4C4E-AE02-CD3E43F485C6}.Release.Build.0 = Release|Win32
+		{904AAEA1-0CD7-4854-A434-01234DD0DEA6}.Debug.ActiveCfg = Debug|Win32
+		{904AAEA1-0CD7-4854-A434-01234DD0DEA6}.Debug.Build.0 = Debug|Win32
+		{904AAEA1-0CD7-4854-A434-01234DD0DEA6}.Release.ActiveCfg = Release|Win32
+		{904AAEA1-0CD7-4854-A434-01234DD0DEA6}.Release.Build.0 = Release|Win32
+		{91CD0E16-8837-485C-98D0-1F9047FBE202}.Debug.ActiveCfg = Debug|Win32
+		{91CD0E16-8837-485C-98D0-1F9047FBE202}.Debug.Build.0 = Debug|Win32
+		{91CD0E16-8837-485C-98D0-1F9047FBE202}.Release.ActiveCfg = Release|Win32
+		{91CD0E16-8837-485C-98D0-1F9047FBE202}.Release.Build.0 = Release|Win32
+		{2BABFCBE-C151-4496-A3B8-2E6D69770240}.Debug.ActiveCfg = Debug|Win32
+		{2BABFCBE-C151-4496-A3B8-2E6D69770240}.Debug.Build.0 = Debug|Win32
+		{2BABFCBE-C151-4496-A3B8-2E6D69770240}.Release.ActiveCfg = Release|Win32
+		{2BABFCBE-C151-4496-A3B8-2E6D69770240}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

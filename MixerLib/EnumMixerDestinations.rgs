@@ -1,0 +1,26 @@
+HKCR
+{
+	MixerLib.EnumMixerDestinations.1 = s 'EnumMixerDestinations Class'
+	{
+		CLSID = s '{03A15F04-CC7D-441C-85B3-F730851D96EE}'
+	}
+	MixerLib.EnumMixerDestinations = s 'EnumMixerDestinations Class'
+	{
+		CLSID = s '{03A15F04-CC7D-441C-85B3-F730851D96EE}'
+		CurVer = s 'MixerLib.EnumMixerDestinations.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {03A15F04-CC7D-441C-85B3-F730851D96EE} = s 'EnumMixerDestinations Class'
+		{
+			ProgID = s 'MixerLib.EnumMixerDestinations.1'
+			VersionIndependentProgID = s 'MixerLib.EnumMixerDestinations'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{F48CCEC5-D328-4BD0-840F-AA1A0BB6AB45}'
+		}
+	}
+}
